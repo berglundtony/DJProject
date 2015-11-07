@@ -1,0 +1,43 @@
+﻿@model SongWishing.Request
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Wish</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Artist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Artist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Låt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Låt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Avsändare)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Avsändare)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDRequest}) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

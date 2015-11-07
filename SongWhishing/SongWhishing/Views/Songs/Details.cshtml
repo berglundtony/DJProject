@@ -1,0 +1,91 @@
+﻿@model SongWishing.Song
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Song</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Artist)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Artist)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Låtnamn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Låtnamn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BPM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BPM)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre_1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre_1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Genre_2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Genre_2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Skivnamn)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Skivnamn)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Utgivningsår)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Utgivningsår)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Importdatum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Importdatum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Omit)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Omit)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IDSong }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

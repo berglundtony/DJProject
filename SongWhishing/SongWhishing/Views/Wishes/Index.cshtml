@@ -1,0 +1,50 @@
+﻿@model IEnumerable<SongWishing.Request>
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Lägg till", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Artist)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Låt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Avsändare)
+        </th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Artist)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Låt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Avsändare)
+        </td>
+        <td>
+            @Html.ActionLink("Ändra", "Edit", new { id=item.IDRequest }) |
+            @Html.ActionLink("Ta bort", "Delete", new { id=item.IDRequest }) |
+            @Html.ActionLink("Meddelande", "MessageToCustomer", new { id = item.IDRequest }, null)
+        
+
+
+        </td>
+    </tr>
+}
+
+</table>
+@ViewData["MessageToCustomer"] 

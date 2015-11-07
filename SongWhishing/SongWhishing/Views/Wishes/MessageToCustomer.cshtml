@@ -1,0 +1,96 @@
+﻿@model SongWishing.Models.MessageViewModel
+
+@{
+    ViewBag.Title = "MessageToCustomer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<script type="text/javascript">
+        $(function () {
+            var autocompleteUrl = '@Url.Action("Find")';
+            $("#text").autocomplete({
+                source: autocompleteUrl,
+                minLength: 1,
+                select: function (event, ui) {
+                    //alert("Selected " + ui.item.label);
+                }
+            })
+        });
+
+
+    $("#Reset").click(function (event) {
+        $("#text").val("");
+    });
+</script>
+
+<h2>Meddelande till Låtönskare</h2>
+<dl class="dl-horizontal">
+    <dt>
+        @Html.LabelFor(model => model.Artist ,new {@class = "left-side" })
+    </dt>
+    <dd>
+        @Model.Request.Artist
+    </dd>
+    <dt>
+        @Html.LabelFor(model => model.Låt, new { @class = "left-side" })
+    </dt>
+    <dd>
+        @Model.Request.Låt
+    </dd>
+    <dt>
+        @Html.LabelFor(model => model.Avsändare, new { @class = "left-side" })
+    </dt>
+    <dd>
+        @Model.Request.Avsändare
+    </dd>
+</dl>
+
+@*This form is sending the message, the SessionID the message belongs to and the IDRequest. These values
+    will be handled in the next ActionResult Message*@
+
+@using (Html.BeginForm("Message", "Wishes"))
+{
+
+    <h2>Text meddelanden</h2>
+  
+    <label for="text">Meddelande</label>
+
+    @Html.DisplayTextFor(model => model.PlayText)
+
+    <div>
+   
+        @Ajax.ActionLink(linkText: "Spelar låten", actionName: "Play", ajaxOptions: new AjaxOptions
+        {
+            UpdateTargetId = "text",
+            InsertionMode = InsertionMode.InsertAfter,
+
+        })
+
+     
+    </div>
+    <div>
+        @Ajax.ActionLink(linkText: "Spelar inte låten", actionName: "NotPlay", ajaxOptions: new AjaxOptions
+        {
+            UpdateTargetId = "text",
+            InsertionMode = InsertionMode.InsertAfter,
+        })
+    </div>
+    <div>
+        @Html.TextAreaFor(model => model.Message, new { value = "text", @id = "text", @class = "formcontrol", rows = 3 })
+        
+        @Html.HiddenFor(x => x.WillNotPlayBoolProperty, new { value = "true", @id = "play" })
+        
+        @Html.EditorFor(x => x.SessionID)
+
+        @Html.EditorFor(x => x.IDRequest)
+    </div>
+   <br />
+   <input type="submit" value="Skicka meddelande" class="btn btn-default" />
+       
+}
+<p>
+    @using (Html.BeginForm("MessageToCustomer", "Wishes"))
+    {
+        <input type="submit" id="Reset" value="Rensa text" class="btn btn-default" />
+    }
+</p>

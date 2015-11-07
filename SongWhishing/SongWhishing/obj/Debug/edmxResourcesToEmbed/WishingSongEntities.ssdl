@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="tracklistModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="DeletedRequests">
+    <Key>
+      <PropertyRef Name="IDDeletedRequest" />
+    </Key>
+    <Property Name="IDDeletedRequest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDRequest" Type="int" Nullable="false" />
+    <Property Name="IDSong" Type="int" />
+    <Property Name="Artist" Type="nvarchar" MaxLength="100" />
+    <Property Name="Song" Type="nvarchar" MaxLength="100" />
+    <Property Name="RequestName" Type="nvarchar" MaxLength="100" />
+    <Property Name="SessionID" Type="nvarchar" MaxLength="50" />
+    <Property Name="TimeWasted" Type="datetime" />
+  </EntityType>
+  <EntityType Name="Requests">
+    <Key>
+      <PropertyRef Name="IDRequest" />
+    </Key>
+    <Property Name="IDRequest" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDSong" Type="int" />
+    <Property Name="Artist" Type="nvarchar" MaxLength="100" />
+    <Property Name="Song" Type="nvarchar" MaxLength="100" />
+    <Property Name="Requestname" Type="nvarchar" MaxLength="50" />
+    <Property Name="SessionID" Type="nvarchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Songs">
+    <Key>
+      <PropertyRef Name="IDSong" />
+    </Key>
+    <Property Name="IDSong" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Artist" Type="nvarchar" MaxLength="100" />
+    <Property Name="Songname" Type="nvarchar" MaxLength="100" />
+    <Property Name="BPM" Type="smallint" />
+    <Property Name="Genre_1" Type="nvarchar" MaxLength="40" />
+    <Property Name="Genre_2" Type="nvarchar" MaxLength="40" />
+    <Property Name="RecordName" Type="nvarchar" MaxLength="100" />
+    <Property Name="Released_Year" Type="smallint" />
+    <Property Name="Imported_Date" Type="datetime" />
+    <Property Name="Omit" Type="bit" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SongsRequests">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="IDSong" Type="int" />
+    <Property Name="IDRequest" Type="int" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityContainer Name="tracklistModelStoreContainer">
+    <EntitySet Name="DeletedRequests" EntityType="Self.DeletedRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Requests" EntityType="Self.Requests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Songs" EntityType="Self.Songs" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="SongsRequests" EntityType="Self.SongsRequests" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+  </EntityContainer>
+</Schema>

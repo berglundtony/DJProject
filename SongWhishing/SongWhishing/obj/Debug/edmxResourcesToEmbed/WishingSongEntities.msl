@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="tracklistModelStoreContainer" CdmEntityContainer="WishingSongEntities">
+    <EntitySetMapping Name="DeletedRequests">
+      <EntityTypeMapping TypeName="tracklistModel.DeletedRequest">
+        <MappingFragment StoreEntitySet="DeletedRequests">
+          <ScalarProperty Name="IDDeletedRequest" ColumnName="IDDeletedRequest" />
+          <ScalarProperty Name="IDRequest" ColumnName="IDRequest" />
+          <ScalarProperty Name="IDSong" ColumnName="IDSong" />
+          <ScalarProperty Name="Artist" ColumnName="Artist" />
+          <ScalarProperty Name="Låt" ColumnName="Song" />
+          <ScalarProperty Name="Avsändare" ColumnName="RequestName" />
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+          <ScalarProperty Name="TimeWasted" ColumnName="TimeWasted" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Requests">
+      <EntityTypeMapping TypeName="tracklistModel.Request">
+        <MappingFragment StoreEntitySet="Requests">
+          <ScalarProperty Name="IDRequest" ColumnName="IDRequest" />
+          <ScalarProperty Name="IDSong" ColumnName="IDSong" />
+          <ScalarProperty Name="Artist" ColumnName="Artist" />
+          <ScalarProperty Name="Låt" ColumnName="Song" />
+          <ScalarProperty Name="Avsändare" ColumnName="Requestname" />
+          <ScalarProperty Name="SessionID" ColumnName="SessionID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Songs">
+      <EntityTypeMapping TypeName="tracklistModel.Song">
+        <MappingFragment StoreEntitySet="Songs">
+          <ScalarProperty Name="IDSong" ColumnName="IDSong" />
+          <ScalarProperty Name="Artist" ColumnName="Artist" />
+          <ScalarProperty Name="Låtnamn" ColumnName="Songname" />
+          <ScalarProperty Name="BPM" ColumnName="BPM" />
+          <ScalarProperty Name="Genre_1" ColumnName="Genre_1" />
+          <ScalarProperty Name="Genre_2" ColumnName="Genre_2" />
+          <ScalarProperty Name="Skivnamn" ColumnName="RecordName" />
+          <ScalarProperty Name="Utgivningsår" ColumnName="Released_Year" />
+          <ScalarProperty Name="Importdatum" ColumnName="Imported_Date" />
+          <ScalarProperty Name="Omit" ColumnName="Omit" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SongsRequests">
+      <EntityTypeMapping TypeName="tracklistModel.SongsRequest">
+        <MappingFragment StoreEntitySet="SongsRequests">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="IDSong" ColumnName="IDSong" />
+          <ScalarProperty Name="IDRequest" ColumnName="IDRequest" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="tracklistModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

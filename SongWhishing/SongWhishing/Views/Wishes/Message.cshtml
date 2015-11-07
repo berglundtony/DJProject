@@ -1,0 +1,60 @@
+﻿@model SongWishing.Models.MessageViewModel
+
+@{
+    ViewBag.Title = "Meddelande";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    @if (TempData["MessageToCustomer"] != null && Session["_UserSession"].ToString() == Model.SessionID)
+    {   
+ 
+        <h3>Meddelande från Dj:</h3>
+
+      
+        if (@Model.WillNotPlayBoolProperty == true)
+        {
+        <text><div class='message-no'>
+            Hej @Model.Avsändare, du har önskat @Model.Låt med @Model.Artist.
+            @Html.DisplayFor(model => model.Message)
+        </div></text>
+        }
+        else
+        {
+        <div class='message'>
+            Hej @Model.Avsändare, du har önskat @Model.Låt med @Model.Artist.
+            @Html.DisplayFor(model => model.Message)</div>
+        }     
+    }
+
+    <h2>Önskade låtar</h2>
+
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Artist)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Låt)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Avsändare)
+            </th>
+        </tr>
+
+        @foreach (var item in Model.allRequests)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Artist)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Låt)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Avsändare)
+                </td>
+            </tr>
+        }
+    </table>
+

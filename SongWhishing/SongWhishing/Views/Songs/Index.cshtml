@@ -1,0 +1,101 @@
+﻿@model PagedList.IPagedList<SongWishing.Song>
+@using PagedList.Mvc
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+@{
+    ViewBag.Title = "Musik";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Låtarkiv</h2>
+
+<p>
+    @Html.ActionLink("Önska en låt", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Songs", FormMethod.Get))
+{
+    <p>
+        Sök efter Artist eller Låt: @Html.TextBox("SearchName", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Sök" />
+    </p>
+
+}
+
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.ActionLink("Artist", "Index", new { sortOrder = ViewBag.ArtistSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.ActionLink("Låt", "Index", new { sortOrder = ViewBag.SongSortParm, currentFilter = ViewBag.CurrentFilter })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().BPM)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Genre_1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Genre_2)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Skivnamn)
+        </th>
+        <th>
+            @Html.ActionLink("Utgivningsår", "Index", new { sortOrder = ViewBag.RealeastYearSortParm })
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Importdatum)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Omit)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Artist)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Låtnamn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BPM)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre_1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genre_2)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Skivnamn)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utgivningsår)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Importdatum)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Omit)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IDSong }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IDSong }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IDSong })
+            </td>
+        </tr>
+    }
+
+</table>
+<br />
+Page @(Model.PageCount < Model.PageNumber ? 0 : @Model.PageNumber) of @Model.PageCount
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page, sortOrder = ViewBag.CurrentSort, currentFilter = ViewBag.CurrentFilter }))
