@@ -55,3 +55,19 @@ div.message-no{
 .left-side{
     float:left;
 }
+
+.search-horizontal {
+    margin-right: -15px;
+    margin-left: -15px;  
+}
+.search-group{
+    margin-bottom: 15px;
+}
+.ui-autocomplete-input{
+    max-width: none;
+    width:65%;
+}
+.artist-group, .song-group{
+    max-width: none;
+    width:40%;
+}

@@ -25,4 +25,16 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 3
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tonyberglundwebbshop.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SongWhishing.Tests\\SongWishing.Tests.csproj
+		SccProjectName1 = SongWhishing.Tests
+		SccLocalPath1 = SongWhishing.Tests
+		SccProjectUniqueName2 = SongWhishing\\SongWishing.csproj
+		SccProjectName2 = SongWhishing
+		SccLocalPath2 = SongWhishing
+	EndGlobalSection
 EndGlobal

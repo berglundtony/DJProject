@@ -20,137 +20,71 @@
     //}
 
 
+    //$function ViewModel(){
+    //    var self = this;
+    //     self.users =
+    //}
+
     $(function () {
-        var viewModel = function(artist, song){
-            this.artistname = ko.observable(artist);
-            this.songname = ko.observable(song);
-        }
+
+        //return {
+        //    label: element.Artist,
+        //    value: element.Song,
+        //    //This we still have acces to the original object
+        //    object:element
+        //}
         function log(message) {
             $("<div/>").text(message).prependTo("#log");
             $("#log").attr("scrollTop", 0);
         }
 
-        
-        var autocompleteUrl = '@Url.Action("getAjaxResult")';
-
-        @*Artist.ViewModel = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));*@
-
-        $("#searchterm").autocomplete({
-            minLength: 1,
-            source: function (request, response) {
-                $.ajax({
-                    url: '@Url.Action("GetSongs")',
-                    dataType: "json",
-                    type: 'POST',
-                    data: {
-                        term: request.term,
-                        //param : "Bruce Springsteen",
-                    },
-                    success: function (data) {
-
-               
-                        response($.map(data, function (item) {
-                            return {
-                                label: item.Song,
-                                value: item.Song,
-                            }
-
-                        }));
-
-                    },
-                    select: function (event, ui) {
-                        log(ui.item ?
-                           "Selected: " + ui.item.label + ", value: " + ui.item.value :
-                           "Nothing selected, input was " + this.value);
-                        localStorage['visited'] = ui.item.value
-                 
-                        @*ko.applyBindings(viewModel)
-                        var jsonModel = @Json.Encode(this.Model);
-                        ko.applyBindings(new viewModel(jsonModel));*@
-                
-                        },
-                });
-             }  
-        });
 
         var autocompleteUrl = '@Url.Action("getAjaxResult")';
 
-        @*Artist.ViewModel = ko.mapping.fromJS(@Html.Raw(Json.Encode(Model)));*@
-
-
-        $("#artist").on('autocompleteselect', function (e, ui) {
-            $('#log').html('Du valde: ' + ui.item.value);
-        })
-
-        $("#artist").autocomplete({
-            minLength: 3,
+        $("#term").autocomplete({
+            minLength: 0,
+            autoFocus: false,
+            delay: 5,
             source: function (request, response) {
                 $.ajax({
-                    url: '@Url.Action("getAjaxResult")',
+                    url: autocompleteUrl,
                     dataType: "json",
                     type: 'POST',
                     data: {
                         term: request.term
                     },
                     success: function (data) {
-
-               
-                    response($.map(data, function (item) {
-                        return {
-                           label: item.Artist,
-                           value: item.Artist,    
-                        }
-
-                }));
-
-                    },
-
-           
-            select: function (event, ui) {
-                log(ui.item ?
-                   $("#log").val( ui.item.label) + ui.item.value :
-                   "Nothing selected, input was " + this.value);
-                @*ko.applyBindings(viewModel)
-                var jsonModel = @Json.Encode(this.Model);
-                ko.applyBindings(new viewModel(jsonModel));*@
-            },
+                        var array = data.error ? [] : $.map(data.slice(0,50), function (item) {
+                            return {
+                              //Here we got two values in the dropdown
+                                label: item.Artist + ": " + item.Song,
+                                artist: item.Artist,
+                                value: item.Song
+                            };
+                        });
+                        response(array);
+                    }
                 });
-                //$('#artist').on('change', function () {
-                //    $('#log').html('You selected: ' + this.value);
-                //}).change();
+            },
+            focus: function (event, ui) {
+             // prevent autocomplete from updating the textbox
+                event.preventDefault();
 
-                //$("#artist").on('autocompleteselect', function (e, ui) {
-                //    $('#log').html('Du valde: ' + ui.item.value);
-                //})
-       
+                $("#term").val(ui.item.label)
+                return false;
+            },
+            select: function (event, ui) {
+              //prevent autocomplete from updating the textbox
+                event.preventDefault();
 
-                //$('#searchterm').on('change', function () {
-                //    $('#log').html('You selected: ' + this.value);
-                //}).change();
+                $("#artistname").val(ui.item.artist)
+                $("#songname").val(ui.item.value)
 
-                $("#searchterm").on('autocompleteselect', function (e, ui) {
-                    $('#log').html('Du valde: ' + ui.item.value);
-                })
- 
+                return false;
             }
-        
-
-       
-        });
-  
-
-
+        })
     });
-    
 
-        function AppViewModel() {
-            this.artistname = "Bert";
-            this.songname = "Bertington";
-
-        }
-        // Activates knockout.js
-        ko.applyBindings(new AppViewModel());
-    
 </script>
 
 <h2>Create</h2>
@@ -158,65 +92,61 @@
 <h4>Önskningar</h4>
 <hr />
 
-@using (Html.BeginForm("GetArtists", "Wishes", FormMethod.Post))
+
+
+
+    @using (Html.BeginForm(FormMethod.Post))
     {
-        <p>
-            Sök efter Artist:@Html.TextBox("artist")
-            <p>
-            Sök låt: @Html.TextBox("searchterm",new { width = "200" })
-            </p>
-            <div class="ui-widget" style="margin-top:2em; font-family:Arial">
-                Result:
-                <div id="log" style="height: 200px; width: 300px; overflow: auto;" class="ui-widget-content"></div>
-            </div>
-    
-        <input type="submit" value="Sök" />
-    </p>
-}
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm( FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Artist , new { data_bind = "value: artistname, valueUpdate: ['blur']", @id = "term", htmlAttributes = new { @class = "form -control" } })
-      
-                @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Låt, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Låt, new { data_bind = "value: songname, valueUpdate: ['blur']", @id = "searchterm", htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Låt, "", new { @class = "text-danger" })
+        <div class="search-horizontal">
+            <div class="form-group">
+                @Html.Label(" Sök efter Artist eller låt:", new { @class = "control-label col-md-2" })
+                <div class="col-md-10 search-group">
+                    @Html.TextBox("term", null, new { @class = "form-control" })
+                </div>
             </div>
-        </div>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Artist, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Artist, new { id = "artistname", @class = "form-control artist-group" })
+                        @Html.ValidationMessageFor(model => model.Artist, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Avsändare, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Avsändare, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Avsändare, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Låt, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Låt, new { id = "songname", @class = "form-control song-group" })
+                        @Html.ValidationMessageFor(model => model.Låt, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Önska" class="btn btn-default" />
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Avsändare, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Avsändare, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Avsändare, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Önska" class="btn btn-default" />
+                    </div>
+                </div>
             </div>
-        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
     </div>
-}
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }

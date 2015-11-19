@@ -79,10 +79,8 @@ namespace SongWishing.Controllers
                              where s.Artist.StartsWith(term) || s.Låtnamn.StartsWith(term)
                              orderby s.Artist
                              //orderby s.Låtnamn
-                             select new { s.Artist, s.Låtnamn }).Take(10).ToList();
+                             select new { s.Artist, s.Låtnamn }).Take(30).Distinct().ToList();
                 //select new { s.Artist, s.Låtnamn }).Distinct().Take(5).ToList();
-
-
 
                 foreach (var s in songs)
                 {
